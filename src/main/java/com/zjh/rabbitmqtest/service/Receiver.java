@@ -1,8 +1,10 @@
 package com.zjh.rabbitmqtest.service;
 
 import com.zjh.rabbitmqtest.entity.Student;
+import com.zjh.rabbitmqtest.mapper.StudentMapper;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +17,13 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(queues = "testQueue")
 public class Receiver {
+
+    private final StudentMapper studentMapper;
+
+    @Autowired
+    public Receiver(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
+    }
 
     @RabbitHandler
     public void receiverName(String name){
@@ -30,6 +39,7 @@ public class Receiver {
      */
     @RabbitHandler
     public void receiverStudent(Student student){
-        System.out.println(student);
+
+        studentMapper.insert(student);
     }
 }

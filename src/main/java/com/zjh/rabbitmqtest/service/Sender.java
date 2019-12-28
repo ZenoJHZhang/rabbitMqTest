@@ -28,7 +28,7 @@ public class Sender {
     }
 
     public void sendStudent(Student student){
-        amqpTemplate.convertAndSend("testExchange","woniu.1111",student);
+        amqpTemplate.convertAndSend("testExchange","woniu.454542",student);
     }
 
 }
